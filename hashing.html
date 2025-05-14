@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>File Hasher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #f5f5f5;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+    }
+
+    header h1 {
+      font-size: 3em;
+      color: #00ffe5;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #ccc;
+    }
+
+    nav {
+      background-color: #1f1f2e;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      padding: 8px 15px;
+      border-radius: 8px;
+    }
+
+    nav a:hover {
+      color: #00ffe5;
+      background-color: #1f1f2e;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,255,255,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffe5;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+    }
+
+    select, input[type="file"], button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #00ffe5;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #00d9ff;
+    }
+
+    .output {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 10px;
+      display: none;
+    }
+
+    .download-section {
+      margin-top: 15px;
+      text-align: center;
+      display: none;
+    }
+
+    a.download-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #00ffe5;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    a.download-link:hover {
+      background-color: #00d9ff;
+    }
+
+    .success-msg {
+      color: #00ffae;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    footer {
+      background-color: #0a0a0a;
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-size: 1em;
+      margin-top: 80px;
+    }
+
+    footer p span {
+      color: #00ffe5;
+    }
+
+    a {
+      color: #00ffe5;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>CipherVerse</h1>
+    <p>Dive deep into the world of cryptography</p>
+  </header>
+
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="working.html">Working</a>
+    <a href="hashing.html">Hashing</a>
+    <a href="ciphers.html">Ciphers</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <div class="container">
+    <h2>File Hasher</h2>
+
+    <label>Select a file:</label>
+    <input type="file" id="fileInput" />
+
+    <label>Select hashing algorithm:</label>
+    <select id="algorithm">
+      <option value="SHA-1">SHA-1</option>
+      <option value="SHA-256">SHA-256</option>
+      <option value="SHA-384">SHA-384</option>
+      <option value="SHA-512">SHA-512</option>
+      <option value="MD5">MD5</option>
+      <option value="RIPEMD160">RIPEMD160</option>
+    </select>
+
+    <button onclick="hashFile()">Hash File</button>
+
+    <div class="output" id="status">✅ File hashed successfully. You can download the result below.</div>
+
+    <div class="download-section" id="downloadArea">
+      <a class="download-link" id="downloadLink">Download Hashed File</a>
+    </div>
+
+    <div class="success-msg" id="downloadSuccess" style="display: none;">
+      ✅ File downloaded successfully!
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 <span>CipherVerse</span>. All rights reserved.</p>
+    <p>Crafted with 🧠, 🎨, and <span>&lt;code/&gt;</span> — Empowering the next generation of cryptographers.</p>
+    <p>Contact us at <a href="mailto:info@cipherverse.com">info@cipherverse.com</a></p>
+  </footer>
+
+  <script>
+    async function hashFile() {
+      const fileInput = document.getElementById('fileInput');
+      const algorithm = document.getElementById('algorithm').value;
+
+      document.getElementById('downloadArea').style.display = 'none';
+      document.getElementById('downloadSuccess').style.display = 'none';
+      document.getElementById('status').style.display = 'none';
+
+      if (!fileInput.files.length) {
+        alert('Please select a file first.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const arrayBuffer = await file.arrayBuffer();
+      let hashHex = '';
+
+      if (algorithm.startsWith('SHA')) {
+        const hashBuffer = await crypto.subtle.digest(algorithm, arrayBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      } else {
+        const wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
+        if (algorithm === 'MD5') {
+          hashHex = CryptoJS.MD5(wordArray).toString();
+        } else if (algorithm === 'RIPEMD160') {
+          hashHex = CryptoJS.RIPEMD160(wordArray).toString();
+        }
+      }
+
+      const blob = new Blob(
+        [`${algorithm} hash of ${file.name}:\n${hashHex}`],
+        { type: 'text/plain' }
+      );
+
+      const link = document.getElementById('downloadLink');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${file.name}.${algorithm.toLowerCase()}.txt`;
+
+      document.getElementById('status').style.display = 'block';
+      document.getElementById('downloadArea').style.display = 'block';
+
+      link.onclick = () => {
+        setTimeout(() => {
+          document.getElementById('downloadSuccess').style.display = 'block';
+        }, 500);
+      };
+    }
+  </script>
+
+</body>
+</html>

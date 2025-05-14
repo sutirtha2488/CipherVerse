@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Types of Ciphers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #f5f5f5;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+    }
+
+    header h1 {
+      font-size: 3em;
+      color: #00ffe5;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #ccc;
+    }
+
+    nav {
+  background-color: #1f1f2e;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Reduced gap for better alignment */
+  align-items: center; /* Ensures items are vertically aligned */
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  padding: 8px 15px; /* Add padding for better spacing */
+  border-radius: 8px; /* Rounded corners for the links */
+}
+
+nav a:hover {
+  color: #00ffe5;
+  background-color: #1f1f2e;
+}
+    .hero {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+      padding: 50px 10%;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero-text h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #00d9ff;
+    }
+
+    .hero-text p {
+      font-size: 1.1em;
+      line-height: 1.8;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 25px;
+      background-color: #00ffe5;
+      color: #000;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #00d9ff;
+    }
+
+    .ciphers-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      padding: 60px 10%;
+      background-color: #13232f;
+    }
+
+    .cipher-card {
+      background-color: #1f2d3d;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cipher-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .cipher-card h3 {
+      color: #00ffe5;
+      margin-bottom: 15px;
+      font-size: 1.8em;
+    }
+
+    .cipher-card p {
+      color: #d0d0d0;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
+    .cipher-card a {
+      align-self: flex-start;
+      padding: 10px 20px;
+      background-color: #00ffe5;
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 25px;
+      transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    .cipher-card a:hover {
+      background-color: #00d9ff;
+      box-shadow: 0 0 15px #00ffe5, 0 0 30px #00ffe5;
+    }
+
+    footer {
+      background-color: #0a0a0a;
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-size: 1em;
+    }
+
+    footer p span {
+      color: #00ffe5;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Types of Ciphers</h1>
+    <p>Learn about the different types of ciphers used in cryptography and their applications in securing data.</p>
+  </header>
+
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="working.html">Working</a>
+    <a href="hashing.html">Hashing</a>
+    <a href="ciphers.html">Ciphers</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <section class="ciphers-container" id="ciphers">
+    <div class="cipher-card">
+      <h3>Caesar Cipher</h3>
+      <p>The Caesar Cipher is one of the simplest and most widely known encryption techniques. It involves shifting each letter of the plaintext by a fixed number of positions in the alphabet. For example, a shift of 3 would turn 'A' into 'D', 'B' into 'E', and so on.</p>
+      <p><strong>Example:</strong> "HELLO" with a shift of 3 becomes "KHOOR".</p>
+      <a href="#" class="learn-more-button">Learn More</a>
+    </div>
+    <div class="cipher-card">
+      <h3>Vigenère Cipher</h3>
+      <p>The Vigenère Cipher is a method of encrypting alphabetic text by using a simple form of polyalphabetic substitution. Unlike the Caesar Cipher, the shift for each letter is determined by a keyword, which is repeated to match the length of the plaintext.</p>
+      <p><strong>Example:</strong> Using the keyword "KEY" to encrypt the plaintext "HELLO" would result in "RIJVS".</p>
+      <a href="#" class="learn-more-button">Learn More</a>
+    </div>
+    <div class="cipher-card">
+      <h3>Enigma Machine</h3>
+      <p>The Enigma Machine was a cipher device used by the Germans during World War II. It employed multiple rotors to create complex encryption, and its strength lay in the vast number of possible settings for each message.</p>
+      <p><strong>Example:</strong> Encrypted messages were intercepted, but the code was famously cracked by the Allies at Bletchley Park, leading to a pivotal victory in the war.</p>
+      <a href="#" class="learn-more-button">Learn More</a>
+    </div>
+    <div class="cipher-card">
+      <h3>Elliptic Curve Cryptography (ECC)</h3>
+      <p>Elliptic Curve Cryptography is an asymmetric encryption technique based on the algebraic structure of elliptic curves. ECC offers a higher level of security with smaller key sizes compared to other methods, such as RSA.</p>
+      <p><strong>Example:</strong> ECC is widely used in mobile devices, as it provides efficient encryption with minimal computational resources.</p>
+      <a href="#" class="learn-more-button">Learn More</a>
+    </div>
+    <div class="cipher-card">
+        <h3>Transposition Cipher</h3>
+        <p>The Transposition Cipher works by rearranging the characters in the plaintext message according to a specific system. The letters are moved around, but not substituted, which makes it different from substitution ciphers.</p>
+        <p><strong>Example:</strong> "HELLO" transposed with a grid of 3 rows might result in "LHELO".</p>
+        <a href="#" class="learn-more-button">Learn More</a>
+      </div>
+      <div class="cipher-card">
+        <h3>One-Time Pad</h3>
+        <p>The One-Time Pad is a theoretically unbreakable encryption method that uses a random key of the same length as the plaintext message. The key is used only once, and then discarded, which makes it impossible to crack if the key is truly random and kept secret.</p>
+        <p><strong>Example:</strong> Encrypting "HELLO" with a random key of the same length could produce something like "XJWEZ".</p>
+        <a href="#" class="learn-more-button">Learn More</a>
+      </div>
+      <div class="cipher-card">
+        <h3>Playfair Cipher</h3>
+        <p>The Playfair Cipher is a digraph substitution cipher that encrypts pairs of letters instead of single letters. It uses a 5x5 grid of letters where each pair is substituted based on their position in the grid.</p>
+        <p><strong>Example:</strong> In the word "HELLO", the first pair ("HE") might become "DI" based on the grid setup.</p>
+        <a href="#" class="learn-more-button">Learn More</a>
+      </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 <span>CipherVerse</span>. All rights reserved.</p>
+    <p>Crafted with 🧠, 🎨, and <span>&lt;code/&gt;</span> — Empowering the next generation of cryptographers.</p>
+    <p>Contact us at <a href="mailto:info@cipherverse.com" style="color:#00ffe5;text-decoration:none;">info@cipherverse.com</a></p>
+  </footer>
+</body>
+
+</html>

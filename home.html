@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What is Cipher?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #f5f5f5;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+    }
+
+    header h1 {
+      font-size: 3em;
+      color: #00ffe5;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #ccc;
+    }
+
+    nav {
+  background-color: #1f1f2e;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Reduced gap for better alignment */
+  align-items: center; /* Ensures items are vertically aligned */
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  padding: 8px 15px; /* Add padding for better spacing */
+  border-radius: 8px; /* Rounded corners for the links */
+}
+
+nav a:hover {
+  color: #00ffe5;
+  background-color: #1f1f2e;
+}
+
+
+    .hero {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+      padding: 50px 10%;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero-text h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #00d9ff;
+    }
+
+    .hero-text p {
+      font-size: 1.1em;
+      line-height: 1.8;
+    }
+
+    .hero img {
+      max-width: 400px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 25px;
+      background-color: #00ffe5;
+      color: #000;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #00d9ff;
+    }
+
+    .extra-info {
+      padding: 50px 10%;
+      background-color: #1b2b34;
+    }
+
+    .extra-info h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #00ffe5;
+    }
+
+    .extra-info p {
+      font-size: 1.05em;
+      line-height: 1.7;
+      color: #ddd;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 60px 10%;
+      background-color: #13232f;
+    }
+
+    .feature-card {
+      background-color: #1f2d3d;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature-card h3 {
+      color: #00ffe5;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      color: #d0d0d0;
+      font-size: 0.95em;
+    }
+
+    footer {
+      background-color: #0a0a0a;
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-size: 1em;
+    }
+
+    footer p span {
+      color: #00ffe5;
+    }
+
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #00ffe5;
+      color: #000;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      display: none;
+      z-index: 1000;
+    }
+
+    #backToTop:hover {
+      background-color: #00d9ff;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>CipherVerse</h1>
+    <p>Dive deep into the world of cryptography</p>
+  </header>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="working.html">Working</a>
+    <a href="hashing.html">Hashing</a>
+    <a href="ciphers.html">Ciphers</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h2>What is a Cipher?</h2>
+      <p>
+        A cipher is an algorithm used for encryption or decryption. It transforms readable data (plaintext) into an unreadable format (ciphertext) to protect sensitive information. Ciphers can be simple like Caesar’s cipher or complex like AES. The science behind it is known as cryptography, which plays a crucial role in cybersecurity and secure communications.
+      </p>
+      <a class="cta-button" href="#features">Explore Features</a>
+    </div>
+    <img src="https://cdn-icons-png.flaticon.com/512/2936/2936787.png" alt="Cipher Illustration">
+  </section>
+
+  <section class="extra-info">
+    <h2>Why are Ciphers Important?</h2>
+    <p>
+      In the digital age, where data breaches and privacy concerns are at an all-time high, ciphers ensure that sensitive information stays protected. Whether it's online banking, private messaging, or government communications, ciphers form the backbone of secure digital interactions.
+      <br><br>
+      Modern cryptography uses advanced mathematical algorithms to encrypt data, making it nearly impossible for unauthorized parties to decode the information without the correct key.
+    </p>
+  </section>
+
+  <section id="features" class="features">
+    <div class="feature-card">
+      <h3>Types of Ciphers</h3>
+      <p>Explore classical and modern cipher techniques like Caesar, Vigenère, RSA, and AES.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Real-World Applications</h3>
+      <p>Learn how ciphers secure emails, bank transactions, and even your chats.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Learn Cryptography</h3>
+      <p>Master the basics of encryption and decryption with hands-on examples.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Build Your Own Cipher</h3>
+      <p>Try simple Python and JavaScript projects to implement basic cipher algorithms.</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <p>&copy; 2025 <span>CipherVerse</span>. All rights reserved.</p>
+    <p>Crafted with 🧠, 🎨, and <span>&lt;code/&gt;</span> — Empowering the next generation of cryptographers.</p>
+    <p>Contact us at <a href="mailto:info@cipherverse.com" style="color:#00ffe5;text-decoration:none;">info@cipherverse.com</a></p>
+  </footer>
+
+  <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</button>
+
+  <script>
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+
+</html>

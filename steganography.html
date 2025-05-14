@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CipherVerse - Steganography</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #f5f5f5;
+      padding: 20px;
+    }
+
+    header, footer {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 30px 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: #00ffe5;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 15px;
+      background-color: #1f1f2e;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    nav a:hover {
+      background: #00ffe5;
+      color: #000;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .box {
+      flex: 1 1 420px;
+      background: #1f2d3d;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    .box h2 {
+      color: #00ffe5;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #00ffe5;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #00e0d1;
+    }
+
+    .output-box {
+      margin-top: 20px;
+      background: #111827;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+    }
+
+    footer p span {
+      color: #00ffe5;
+    }
+
+    a.download-link {
+      color: #00ffe5;
+      text-decoration: underline;
+      display: inline-block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>CipherVerse</h1>
+    <p>Revolutionizing Cryptography & Data Security</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Working</a>
+    <a href="#">Hashing</a>
+    <a href="#">Ciphers</a>
+    <a href="#">Steganography</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <div class="container">
+    <!-- Encode Section -->
+    <div class="box">
+      <h2>🛠️ Encode (Hide)</h2>
+      <label for="encodeImage">Select Cover Image (PNG):</label>
+      <input type="file" id="encodeImage" accept="image/png">
+
+      <label for="encodeType">Choose what to hide:</label>
+      <select id="encodeType">
+        <option value="text">Text</option>
+        <option value="file">File</option>
+      </select>
+
+      <div id="textInputBox">
+        <label for="secretText">Enter Secret Text:</label>
+        <textarea id="secretText" placeholder="Write your secret message here..."></textarea>
+      </div>
+
+      <div id="fileInputBox" style="display:none;">
+        <label for="hiddenFile">Select File to Hide:</label>
+        <input type="file" id="hiddenFile">
+      </div>
+
+      <button onclick="handleEncode()">🔐 Hide in Image</button>
+      <div class="output-box" id="encodeOutput"></div>
+    </div>
+
+    <!-- Decode Section -->
+    <div class="box">
+      <h2>🔓 Decode (Reveal)</h2>
+      <label for="stegoImage">Select Stego Image:</label>
+      <input type="file" id="stegoImage" accept="image/png">
+
+      <label for="decodeType">What are you trying to extract?</label>
+      <select id="decodeType">
+        <option value="text">Text</option>
+        <option value="file">File</option>
+      </select>
+
+      <button onclick="handleDecode()">🔍 Reveal from Image</button>
+      <div class="output-box" id="decodeOutput"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 <span>CipherVerse</span>. All rights reserved.</p>
+    <p>Crafted with 🧠, 🎨, and <span>&lt;code/&gt;</span> — Empowering the next generation of cryptographers.</p>
+    <p>Contact us at <a href="mailto:info@cipherverse.com" style="color:#00ffe5;">info@cipherverse.com</a></p>
+  </footer>
+
+  <script>
+    let hiddenData = null;
+    let hiddenDataType = null;
+    let hiddenFilename = null;
+
+    const encodeType = document.getElementById('encodeType');
+    const decodeType = document.getElementById('decodeType');
+    const textInputBox = document.getElementById('textInputBox');
+    const fileInputBox = document.getElementById('fileInputBox');
+
+    encodeType.addEventListener('change', () => {
+      if (encodeType.value === 'text') {
+        textInputBox.style.display = 'block';
+        fileInputBox.style.display = 'none';
+      } else {
+        textInputBox.style.display = 'none';
+        fileInputBox.style.display = 'block';
+      }
+    });
+
+    function createDownloadLink(data, filename, type) {
+      const blob = new Blob([data], { type });
+      const url = URL.createObjectURL(blob);
+      return `<a class="download-link" href="${url}" download="${filename}">⬇ Download ${filename}</a>`;
+    }
+
+    function handleEncode() {
+      const image = document.getElementById('encodeImage').files[0];
+      const type = encodeType.value;
+      const output = document.getElementById('encodeOutput');
+
+      if (!image) {
+        output.innerHTML = "<p style='color: #ff7373;'>⚠️ Please select a cover image.</p>";
+        return;
+      }
+
+      if (type === 'text') {
+        const secret = document.getElementById('secretText').value.trim();
+        if (!secret) {
+          output.innerHTML = "<p style='color: #ff7373;'>⚠️ Enter some text to hide.</p>";
+          return;
+        }
+        hiddenData = secret;
+        hiddenDataType = 'text';
+        output.innerHTML = `<p>✅ Text successfully hidden!</p>` +
+          createDownloadLink("Simulated Stego Image with text", 'text_stego_image.png', 'image/png');
+      } else {
+        const file = document.getElementById('hiddenFile').files[0];
+        if (!file) {
+          output.innerHTML = "<p style='color: #ff7373;'>⚠️ Please select a file.</p>";
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          hiddenData = e.target.result;
+          hiddenDataType = 'file';
+          hiddenFilename = file.name;
+          output.innerHTML = `<p>✅ File successfully hidden!</p>` +
+            createDownloadLink("Simulated Stego Image with file", 'file_stego_image.png', 'image/png');
+        };
+        reader.readAsText(file);
+      }
+    }
+
+    function handleDecode() {
+      const stegoImage = document.getElementById('stegoImage').files[0];
+      const type = decodeType.value;
+      const output = document.getElementById('decodeOutput');
+
+      if (!stegoImage) {
+        output.innerHTML = "<p style='color: #ff7373;'>⚠️ Select a stego image first.</p>";
+        return;
+      }
+
+      if (type !== hiddenDataType || hiddenData == null) {
+        output.innerHTML = "<p style='color: #ff7373;'>❌ Nothing found or wrong type selected.</p>";
+        return;
+      }
+
+      if (type === 'text') {
+        output.innerHTML = `<p>✅ Text Revealed:</p>
+          <div style="background: #1e293b; padding: 12px; border-radius: 8px; font-weight: 500;">${hiddenData}</div>`;
+      } else {
+        output.innerHTML = `<p>✅ File Revealed:</p>` +
+          createDownloadLink(hiddenData, hiddenFilename || 'extracted_file.txt', 'text/plain');
+      }
+    }
+  </script>
+</body>
+</html>

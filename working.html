@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CipherVerse - Encrypt & Decrypt</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #f5f5f5;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    header h1 {
+      font-size: 3em;
+      color: #00ffe5;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #ccc;
+    }
+
+    nav {
+      background-color: #1f1f2e;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 15px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #00ffe5;
+    }
+
+    .main {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 30px;
+    }
+
+    .box {
+      background: #1f2d3d;
+      padding: 20px;
+      border-radius: 15px;
+      width: 45%;
+      min-width: 300px;
+      margin: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      color: #00ffe5;
+      margin-bottom: 15px;
+    }
+
+    textarea, select, input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #00ffe5;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #00d9ff;
+    }
+
+    .result-box {
+      background-color: #333;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      position: relative;
+    }
+
+    .copy-btn {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #00ffe5;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.8em;
+      cursor: pointer;
+    }
+
+    .result-text {
+      white-space: pre-wrap;
+    }
+
+    footer {
+      background-color: #0a0a0a;
+      text-align: center;
+      padding: 30px 20px;
+      color: #999;
+    }
+
+    footer p span {
+      color: #00ffe5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CipherVerse</h1>
+    <p>Revolutionizing Cryptography & Data Security</p>
+  </header>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="working.html">Working</a>
+    <a href="hashing.html">Hashing</a>
+    <a href="ciphers.html">Ciphers</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <div class="main">
+    <!-- Encrypt Box -->
+    <div class="box">
+      <h2>Encrypt</h2>
+      <textarea id="encryptInput" rows="5" placeholder="Enter text to encrypt..."></textarea>
+      <select id="encryptCipher" onchange="toggleEncryptInputs()">
+        <option value="caesar">Caesar Cipher</option>
+        <option value="vigenere">Vigenère Cipher</option>
+        <option value="rot13">ROT13 Cipher</option>
+        <option value="reverse">Reverse Cipher</option>
+        <option value="base64">Base64 Encoding</option>
+        <option value="atbash">Atbash Cipher</option>
+      </select>
+      <input type="number" id="encryptShift" placeholder="Shift (for Caesar)" style="display: none;">
+      <input type="text" id="encryptKey" placeholder="Secret Key (for Vigenère)" style="display: none;">
+      <button onclick="encryptText()">Encrypt</button>
+      <div class="result-box" id="encryptResultBox" style="display:none;">
+        <button class="copy-btn" onclick="copyResult('encryptResult')">Copy</button>
+        <p class="result-text" id="encryptResult"></p>
+      </div>
+    </div>
+
+    <!-- Decrypt Box -->
+    <div class="box">
+      <h2>Decrypt</h2>
+      <textarea id="decryptInput" rows="5" placeholder="Enter text to decrypt..."></textarea>
+      <select id="decryptCipher" onchange="toggleDecryptInputs()">
+        <option value="caesar">Caesar Cipher</option>
+        <option value="vigenere">Vigenère Cipher</option>
+        <option value="rot13">ROT13 Cipher</option>
+        <option value="reverse">Reverse Cipher</option>
+        <option value="base64">Base64 Encoding</option>
+        <option value="atbash">Atbash Cipher</option>
+      </select>
+      <input type="number" id="decryptShift" placeholder="Shift (for Caesar)" style="display: none;">
+      <input type="text" id="decryptKey" placeholder="Secret Key (for Vigenère)" style="display: none;">
+      <button onclick="decryptText()">Decrypt</button>
+      <div class="result-box" id="decryptResultBox" style="display:none;">
+        <button class="copy-btn" onclick="copyResult('decryptResult')">Copy</button>
+        <p class="result-text" id="decryptResult"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 <span>CipherVerse</span>. All rights reserved.</p>
+    <p>Crafted with 🧠, 🎨, and <span>&lt;code/&gt;</span> — Empowering the next generation of cryptographers.</p>
+    <p>Contact us at <a href="mailto:info@cipherverse.com" style="color:#00ffe5;text-decoration:none;">info@cipherverse.com</a></p>
+  </footer>
+
+  <script>
+    function toggleEncryptInputs() {
+      const cipher = document.getElementById('encryptCipher').value;
+      document.getElementById('encryptShift').style.display = cipher === 'caesar' ? 'block' : 'none';
+      document.getElementById('encryptKey').style.display = cipher === 'vigenere' ? 'block' : 'none';
+    }
+
+    function toggleDecryptInputs() {
+      const cipher = document.getElementById('decryptCipher').value;
+      document.getElementById('decryptShift').style.display = cipher === 'caesar' ? 'block' : 'none';
+      document.getElementById('decryptKey').style.display = cipher === 'vigenere' ? 'block' : 'none';
+    }
+
+    function caesarEncrypt(text, shift) {
+      return text.split('').map(char => {
+        if (/[a-z]/i.test(char)) {
+          const code = char.charCodeAt(0);
+          const base = code >= 65 && code <= 90 ? 65 : 97;
+          return String.fromCharCode((code - base + shift + 26) % 26 + base);
+        }
+        return char;
+      }).join('');
+    }
+
+    function caesarDecrypt(text, shift) {
+      return caesarEncrypt(text, -shift);
+    }
+
+    function vigenereEncrypt(text, key) {
+      key = key.toLowerCase().replace(/[^a-z]/g, '');
+      let result = '', j = 0;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (/[a-z]/i.test(char)) {
+          const base = char === char.toUpperCase() ? 65 : 97;
+          const shift = key.charCodeAt(j % key.length) - 97;
+          result += String.fromCharCode((char.charCodeAt(0) - base + shift + 26) % 26 + base);
+          j++;
+        } else {
+          result += char;
+        }
+      }
+      return result;
+    }
+
+    function vigenereDecrypt(text, key) {
+      key = key.toLowerCase().replace(/[^a-z]/g, '');
+      let result = '', j = 0;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (/[a-z]/i.test(char)) {
+          const base = char === char.toUpperCase() ? 65 : 97;
+          const shift = 26 - (key.charCodeAt(j % key.length) - 97);
+          result += String.fromCharCode((char.charCodeAt(0) - base + shift + 26) % 26 + base);
+          j++;
+        } else {
+          result += char;
+        }
+      }
+      return result;
+    }
+
+    function rot13(text) {
+      return text.replace(/[a-zA-Z]/g, c => String.fromCharCode(
+        c.charCodeAt(0) + (c.toLowerCase() < 'n' ? 13 : -13)
+      ));
+    }
+
+    function reverse(text) {
+      return text.split('').reverse().join('');
+    }
+
+    function atbash(text) {
+      return text.split('').map(char => {
+        if (/[a-z]/.test(char)) return String.fromCharCode(219 - char.charCodeAt(0));
+        if (/[A-Z]/.test(char)) return String.fromCharCode(155 - char.charCodeAt(0));
+        return char;
+      }).join('');
+    }
+
+    function base64Encode(text) {
+      return btoa(text);
+    }
+
+    function base64Decode(text) {
+      return atob(text);
+    }
+
+    function encryptText() {
+      const cipher = document.getElementById('encryptCipher').value;
+      const text = document.getElementById('encryptInput').value;
+      let result = '';
+      if (cipher === 'caesar') {
+        const shift = parseInt(document.getElementById('encryptShift').value);
+        if (isNaN(shift)) result = 'Enter valid shift';
+        else result = caesarEncrypt(text, shift);
+      } else if (cipher === 'vigenere') {
+        const key = document.getElementById('encryptKey').value.trim();
+        result = key ? vigenereEncrypt(text, key) : 'Enter a keyword';
+      } else if (cipher === 'rot13') {
+        result = rot13(text);
+      } else if (cipher === 'reverse') {
+        result = reverse(text);
+      } else if (cipher === 'base64') {
+        result = base64Encode(text);
+      } else if (cipher === 'atbash') {
+        result = atbash(text);
+      }
+      const box = document.getElementById('encryptResultBox');
+      const output = document.getElementById('encryptResult');
+      output.textContent = result;
+      box.style.display = result ? 'block' : 'none';
+      box.querySelector('.copy-btn').style.display = result ? 'block' : 'none';
+    }
+
+    function decryptText() {
+      const cipher = document.getElementById('decryptCipher').value;
+      const text = document.getElementById('decryptInput').value;
+      let result = '';
+      if (cipher === 'caesar') {
+        const shift = parseInt(document.getElementById('decryptShift').value);
+        if (isNaN(shift)) result = 'Enter valid shift';
+        else result = caesarDecrypt(text, shift);
+      } else if (cipher === 'vigenere') {
+        const key = document.getElementById('decryptKey').value.trim();
+        result = key ? vigenereDecrypt(text, key) : 'Enter a keyword';
+      } else if (cipher === 'rot13') {
+        result = rot13(text);
+      } else if (cipher === 'reverse') {
+        result = reverse(text);
+      } else if (cipher === 'base64') {
+        result = base64Decode(text);
+      } else if (cipher === 'atbash') {
+        result = atbash(text);
+      }
+      const box = document.getElementById('decryptResultBox');
+      const output = document.getElementById('decryptResult');
+      output.textContent = result;
+      box.style.display = result ? 'block' : 'none';
+      box.querySelector('.copy-btn').style.display = result ? 'block' : 'none';
+    }
+
+    function copyResult(id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard!');
+      });
+    }
+
+    toggleEncryptInputs();
+    toggleDecryptInputs();
+  </script>
+</body>
+</html>
